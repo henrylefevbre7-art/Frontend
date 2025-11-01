@@ -1,1 +1,470 @@
+<!DOCTYPE html>
 
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBD Shop</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .image-gallery { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; }
+        .image-gallery img { scroll-snap-align: start; min-width: 100%; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+```
+<script type="module">
+    const products = [
+        {
+            id: 1,
+            name: 'Cartouche CBD 1g - OG Kush',
+            type: 'Cartouche',
+            price: 35,
+            emoji: '🌿',
+            description: 'Cartouche premium 1g avec arôme OG Kush classique',
+            detailedDescription: `Cette cartouche premium de 1g offre une expérience exceptionnelle avec son arôme OG Kush authentique. 
+```
+
+Caractéristiques :
+• 1000mg de CBD pur
+• Arôme naturel de OG Kush
+• Compatible avec batteries 510
+• Sans THC (< 0.2%)
+• Fabriqué en France
+
+Profil aromatique : Notes terreuses et boisées avec une touche de pin. Un classique apprécié pour sa saveur riche et son effet relaxant.
+
+Utilisation recommandée : 2-3 inhalations, attendre 15 minutes entre chaque session.`, images: [ 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800', 'https://images.unsplash.com/photo-1605792657660-596af9009e82?w=800', 'https://images.unsplash.com/photo-1612796448932-48ed8d8a3d0d?w=800' ], specs: { 'Contenance': '1g (1000mg)', 'Type': 'Cartouche 510', 'CBD': '85%', 'THC': '< 0.2%', 'Origine': 'France' } }, { id: 2, name: 'Cartouche CBD 1g - Amnesia', type: 'Cartouche', price: 35, emoji: '🌿', description: 'Cartouche premium 1g avec arôme Amnesia énergisant', detailedDescription: `Découvrez notre cartouche Amnesia, reconnue pour son profil aromatique unique et stimulant.
+
+Caractéristiques :
+• 1000mg de CBD premium
+• Arôme Amnesia authentique
+• Thread 510 universel
+• Certification lab testé
+• Production européenne
+
+Profil aromatique : Notes d’agrumes frais avec des touches florales et épicées. Parfait pour un boost d’énergie naturelle.
+
+Idéal pour : Moments de créativité, concentration, et journées actives.`, images: [ 'https://images.unsplash.com/photo-1585779034823-7e9ac8faec70?w=800', 'https://images.unsplash.com/photo-1512699355324-f07e3106dae5?w=800', 'https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?w=800' ], specs: { 'Contenance': '1g (1000mg)', 'Type': 'Cartouche 510', 'CBD': '87%', 'THC': '< 0.2%', 'Origine': 'Europe' } }, { id: 3, name: 'Disposable CBD 1g - Lemon Haze', type: 'Disposable', price: 30, emoji: '🍋', description: 'Pen jetable 1g au citron rafraîchissant', detailedDescription: `Notre pen jetable Lemon Haze offre une expérience pratique et savoureuse sans compromis sur la qualité.
+
+Caractéristiques :
+• 1000mg de CBD pur
+• Prêt à l’emploi, batterie intégrée
+• Environ 400 bouffées
+• Design discret et élégant
+• Sans entretien
+
+Profil aromatique : Explosion de citron frais avec des notes sucrées. Un choix parfait pour une sensation revigorante toute la journée.
+
+Avantages du jetable : Pas de recharge, pas de nettoyage. Utilisez et recyclez.`, images: [ 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800', 'https://images.unsplash.com/photo-1625772452859-1c03d5ba1815?w=800', 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800' ], specs: { 'Contenance': '1g (1000mg)', 'Type': 'Pen jetable', 'Bouffées': '~400', 'CBD': '83%', 'Batterie': 'Intégrée 280mAh' } }, { id: 4, name: 'Disposable CBD 1g - Strawberry', type: 'Disposable', price: 30, emoji: '🍓', description: 'Pen jetable 1g saveur fraise gourmande', detailedDescription: `Savourez l’expérience unique de notre pen Strawberry, alliant qualité premium et saveur irrésistible.
+
+Caractéristiques :
+• 1000mg de CBD haute qualité
+• Activation automatique
+• Jusqu’à 400 utilisations
+• Compact et portable
+• LED indicateur
+
+Profil aromatique : Fraise douce et juteuse avec une touche de crème. Une saveur gourmande qui plaît à tous.
+
+Parfait pour : Les amateurs de saveurs fruitées et ceux qui découvrent le CBD.`, images: [ 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800', 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800', 'https://images.unsplash.com/photo-1612796448932-48ed8d8a3d0d?w=800' ], specs: { 'Contenance': '1g (1000mg)', 'Type': 'Pen jetable', 'Bouffées': '~400', 'CBD': '84%', 'Batterie': 'Intégrée 280mAh' } }, { id: 5, name: 'Cartouche CBD 1g - Blueberry', type: 'Cartouche', price: 35, emoji: '🫐', description: 'Cartouche premium 1g saveur myrtille', detailedDescription: `Notre cartouche Blueberry offre une expérience relaxante avec son arôme doux et fruité.
+
+Caractéristiques :
+• 1000mg de CBD pur
+• Arôme naturel de myrtille
+• Céramique haute qualité
+• Thread 510 standard
+• Lab testé et certifié
+
+Profil aromatique : Myrtille sucrée avec des notes légèrement acidulées. Un équilibre parfait pour une relaxation optimale.
+
+Recommandé pour : Moments de détente, soirées calmes, méditation.`, images: [ 'https://images.unsplash.com/photo-1602524206684-43a7e098a03e?w=800', 'https://images.unsplash.com/photo-1585779034823-7e9ac8faec70?w=800', 'https://images.unsplash.com/photo-1605792657660-596af9009e82?w=800' ], specs: { 'Contenance': '1g (1000mg)', 'Type': 'Cartouche 510', 'CBD': '86%', 'THC': '< 0.2%', 'Origine': 'France' } }, { id: 6, name: 'Disposable CBD 1g - Mango', type: 'Disposable', price: 30, emoji: '🥭', description: 'Pen jetable 1g saveur mangue tropicale', detailedDescription: `Évadez-vous avec notre pen Mango, une explosion tropicale dans un format pratique et discret.
+
+Caractéristiques :
+• 1000mg de CBD premium
+• Batterie longue durée
+• Design ergonomique
+• Activation par aspiration
+• Recyclable
+
+Profil aromatique : Mangue mûre et juteuse avec des notes tropicales exotiques. Un voyage sensoriel à chaque bouffée.
+
+Points forts : Saveur authentique, effet relaxant, utilisation ultra-simple.`,
+images: [
+‘https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800’,
+‘https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800’,
+‘https://images.unsplash.com/photo-1625772452859-1c03d5ba1815?w=800’
+],
+specs: {
+‘Contenance’: ‘1g (1000mg)’,
+‘Type’: ‘Pen jetable’,
+‘Bouffées’: ‘~400’,
+‘CBD’: ‘85%’,
+‘Batterie’: ‘Intégrée 280mAh’
+}
+}
+];
+
+```
+    let cart = [];
+    let currentView = 'products';
+    let selectedProduct = null;
+    let tg = null;
+
+    if (window.Telegram?.WebApp) {
+        tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.MainButton.hide();
+        tg.BackButton.onClick(() => {
+            if (currentView === 'product') {
+                currentView = 'products';
+                tg.BackButton.hide();
+            } else if (currentView === 'cart') {
+                currentView = 'products';
+            }
+            render();
+        });
+    }
+
+    function showProduct(productId) {
+        selectedProduct = products.find(p => p.id === productId);
+        currentView = 'product';
+        if (tg) {
+            tg.BackButton.show();
+            tg.HapticFeedback.impactOccurred('light');
+        }
+        render();
+    }
+
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        const existing = cart.find(item => item.id === productId);
+        
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+        
+        if (tg) tg.HapticFeedback.impactOccurred('medium');
+        updateCart();
+        render();
+    }
+
+    function updateQuantity(productId, change) {
+        const item = cart.find(i => i.id === productId);
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            }
+        }
+        if (tg) tg.HapticFeedback.impactOccurred('light');
+        updateCart();
+        render();
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        if (tg) tg.HapticFeedback.impactOccurred('medium');
+        updateCart();
+        render();
+    }
+
+    function getTotal() {
+        return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+
+    function getTotalItems() {
+        return cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function updateCart() {
+        const itemCount = getTotalItems();
+        if (tg) {
+            if (itemCount > 0) {
+                tg.MainButton.setText(`Voir le panier (${itemCount})`);
+                tg.MainButton.show();
+                tg.MainButton.onClick(() => {
+                    currentView = 'cart';
+                    render();
+                });
+            } else {
+                tg.MainButton.hide();
+            }
+        }
+    }
+
+    function sendOrder() {
+        if (cart.length === 0) return;
+
+        let message = '🛍️ *NOUVELLE COMMANDE*\\n\\n';
+        
+        cart.forEach(item => {
+            message += `${item.emoji} *${item.name}*\\n`;
+            message += `   Quantité: ${item.quantity}\\n`;
+            message += `   Prix unitaire: ${item.price}€\\n`;
+            message += `   Sous\\-total: ${item.price * item.quantity}€\\n\\n`;
+        });
+        
+        message += `💰 *TOTAL: ${getTotal()}€*\\n\\n`;
+        
+        if (tg?.initDataUnsafe?.user) {
+            const user = tg.initDataUnsafe.user;
+            message += `👤 Client: ${user.first_name || ''}`;
+            if (user.last_name) message += ` ${user.last_name}`;
+            if (user.username) message += ` (@${user.username})`;
+            message += `\\n🆔 User ID: ${user.id}`;
+        }
+
+        if (tg) {
+            tg.sendData(JSON.stringify({
+                cart: cart,
+                total: getTotal(),
+                message: message
+            }));
+            
+            tg.showAlert('✅ Commande envoyée ! Vous serez contacté rapidement.', () => {
+                cart = [];
+                currentView = 'products';
+                updateCart();
+                render();
+            });
+        } else {
+            alert('Mode test:\\n\\n' + message.replace(/\\\\/g, ''));
+            console.log('Commande:', { cart, total: getTotal() });
+        }
+    }
+
+    function render() {
+        const app = document.getElementById('app');
+        
+        if (currentView === 'product') {
+            app.innerHTML = renderProductDetail();
+        } else if (currentView === 'cart') {
+            app.innerHTML = renderCart();
+        } else {
+            app.innerHTML = renderProducts();
+        }
+        
+        attachEventListeners();
+    }
+
+    function renderProductDetail() {
+        if (!selectedProduct) return '';
+
+        return `
+            <div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pb-24 fade-in">
+                <div class="bg-white">
+                    <div class="image-gallery bg-gradient-to-br from-green-400 to-blue-400 p-12">
+                        <div class="text-center">
+                            <span class="text-8xl">${selectedProduct.emoji}</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold mb-3">
+                            ${selectedProduct.type}
+                        </span>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">${selectedProduct.name}</h1>
+                        <p class="text-xl font-bold text-green-600 mb-4">${selectedProduct.price}€</p>
+                        <p class="text-gray-600 mb-6">${selectedProduct.description}</p>
+
+                        <button onclick="addToCart(${selectedProduct.id})" 
+                            class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-blue-600 transition-all shadow-lg mb-6">
+                            🛒 Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Description détaillée</h2>
+                        <div class="text-gray-700 whitespace-pre-line leading-relaxed">
+                            ${selectedProduct.detailedDescription}
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">🔍 Caractéristiques</h2>
+                        <div class="space-y-3">
+                            ${Object.entries(selectedProduct.specs).map(([key, value]) => `
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 last:border-0">
+                                    <span class="text-gray-600 font-medium">${key}</span>
+                                    <span class="text-gray-800 font-semibold">${value}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderProducts() {
+        const itemCount = getTotalItems();
+        
+        return `
+            <div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4 pb-32 fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <header class="text-center mb-8 pt-4">
+                        <h1 class="text-4xl font-bold text-gray-800 mb-2">🌿 CBD Shop</h1>
+                        <p class="text-gray-600">Cartouches & Disposables Premium 1g</p>
+                    </header>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        ${products.map(product => `
+                            <div onclick="showProduct(${product.id})" class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer">
+                                <div class="bg-gradient-to-br from-green-400 to-blue-400 p-8 flex items-center justify-center">
+                                    <span class="text-6xl">${product.emoji}</span>
+                                </div>
+                                
+                                <div class="p-5">
+                                    <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold mb-2">
+                                        ${product.type}
+                                    </span>
+                                    <h3 class="font-bold text-gray-800 text-lg mb-1">${product.name}</h3>
+                                    <p class="text-sm text-gray-600 mb-3">${product.description}</p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-2xl font-bold text-green-600">${product.price}€</span>
+                                        <button 
+                                            onclick="event.stopPropagation(); addToCart(${product.id})"
+                                            class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-2 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all shadow-md">
+                                            + Ajouter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${itemCount > 0 ? `
+                        <div class="fixed bottom-4 left-4 right-4 max-w-4xl mx-auto">
+                            <div class="bg-white rounded-2xl shadow-2xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-green-100 p-3 rounded-xl">
+                                        <span class="text-2xl">🛒</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">${itemCount} article(s)</p>
+                                        <p class="text-sm text-gray-600">Total: ${getTotal()}€</p>
+                                    </div>
+                                </div>
+                                <button 
+                                    onclick="showCart()"
+                                    class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all shadow-lg">
+                                    Voir le panier
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderCart() {
+        return `
+            <div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4 fade-in">
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-2xl shadow-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800">Mon Panier</h2>
+                            <button onclick="showProducts()" class="text-gray-500 hover:text-gray-700 text-sm">
+                                ← Retour
+                            </button>
+                        </div>
+
+                        ${cart.length === 0 ? `
+                            <div class="text-center py-12">
+                                <span class="text-6xl">🛒</span>
+                                <p class="text-gray-500 mt-4">Votre panier est vide</p>
+                            </div>
+                        ` : `
+                            <div class="space-y-4 mb-6">
+                                ${cart.map(item => `
+                                    <div class="bg-gray-50 rounded-xl p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="text-2xl">${item.emoji}</span>
+                                                    <h3 class="font-semibold text-gray-800">${item.name}</h3>
+                                                </div>
+                                                <p class="text-sm text-gray-600">${item.price}€ / unité</p>
+                                            </div>
+                                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-600">
+                                                🗑️
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-3 bg-white rounded-lg p-1">
+                                                <button onclick="updateQuantity(${item.id}, -1)" 
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                                                    −
+                                                </button>
+                                                <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                                                <button onclick="updateQuantity(${item.id}, 1)"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-500 hover:bg-green-600 text-white">
+                                                    +
+                                                </button>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-lg font-bold text-gray-800">${item.price * item.quantity}€</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="border-t border-gray-200 pt-4 mb-6">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-gray-800">Total</span>
+                                    <span class="text-2xl font-bold text-green-600">${getTotal()}€</span>
+                                </div>
+                            </div>
+
+                            <button onclick="sendOrder()"
+                                class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-blue-600 transition-all shadow-lg">
+                                📤 Envoyer la commande
+                            </button>
+                        `}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function attachEventListeners() {
+        window.addToCart = addToCart;
+        window.updateQuantity = updateQuantity;
+        window.removeFromCart = removeFromCart;
+        window.showCart = () => {
+            currentView = 'cart';
+            render();
+        };
+        window.showProducts = () => {
+            currentView = 'products';
+            selectedProduct = null;
+            if (tg) tg.BackButton.hide();
+            render();
+        };
+        window.showProduct = showProduct;
+        window.sendOrder = sendOrder;
+    }
+
+    render();
+</script>
+```
+
+</body>
+</html> 
